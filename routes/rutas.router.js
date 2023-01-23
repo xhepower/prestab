@@ -1,25 +1,25 @@
 const express = require('express');
 const passport = require('passport');
-const ConceptoService = require('./../services/concepto.service');
+const RutaService = require('./../services/ruta.service');
 const validatorHandler = require('./../middlewares/validator.handler');
-const { checkRoles } = require('./../middlewares/auth.handler');
 const {
-  createConceptoSchema,
-  updateConceptoSchema,
-  getConceptoSchema,
-} = require('./../schemas/concepto.schema');
+  updateRutaSchema,
+  createRutaSchema,
+  getRutaSchema,
+} = require('./../schemas/ruta.schema');
 
 const router = express.Router();
-const service = new ConceptoService();
+const service = new RutaService();
+const { checkRoles } = require('./../middlewares/auth.handler');
 
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('user', 'editor'),
+  checkRoles('user'),
   async (req, res, next) => {
     try {
-      const conceptos = await service.find();
-      res.json(conceptos);
+      const rutas = await service.find();
+      res.json(rutas);
     } catch (error) {
       next(error);
     }
@@ -29,13 +29,13 @@ router.get(
 router.get(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('user', 'editor'),
-  validatorHandler(getConceptoSchema, 'params'),
+  checkRoles('user'),
+  validatorHandler(getRutaSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const concepto = await service.findOne(id);
-      res.json(concepto);
+      const category = await service.findOne(id);
+      res.json(category);
     } catch (error) {
       next(error);
     }
@@ -45,13 +45,13 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('user', 'editor'),
-  validatorHandler(createConceptoSchema, 'body'),
+  checkRoles('user'),
+  validatorHandler(createRutaSchema, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;
-      const newConcepto = await service.create(body);
-      res.status(201).json(newConcepto);
+      const newCategory = await service.create(body);
+      res.status(201).json(newCategory);
     } catch (error) {
       next(error);
     }
@@ -61,15 +61,15 @@ router.post(
 router.patch(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('editor'),
-  validatorHandler(getConceptoSchema, 'params'),
-  validatorHandler(updateConceptoSchema, 'body'),
+  checkRoles(),
+  validatorHandler(getRutaSchema, 'params'),
+  validatorHandler(updateRutaSchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const body = req.body;
-      const concepto = await service.update(id, body);
-      res.json(concepto);
+      const category = await service.update(id, body);
+      res.json(category);
     } catch (error) {
       next(error);
     }
@@ -79,8 +79,8 @@ router.patch(
 router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('editor'),
-  validatorHandler(getConceptoSchema, 'params'),
+  checkRoles(),
+  validatorHandler(getRutaSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;

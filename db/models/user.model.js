@@ -37,6 +37,15 @@ const UserSchema = {
 };
 
 class User extends Model {
+  static associate(models) {
+    this.hasMany(models.Ruta, {
+      as: 'rutas',
+      foreignKey: 'idUser',
+    });
+  }
+  /*Team.hasMany(Player, {
+    foreignKey: 'clubId'
+  });*/
   static config(sequelize) {
     return {
       sequelize,
