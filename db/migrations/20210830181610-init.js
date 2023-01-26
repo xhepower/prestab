@@ -102,8 +102,8 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable(USER_TABLE);
     await queryInterface.dropTable(CLIENTE_TABLE);
     await queryInterface.dropTable(RUTA_TABLE);
+    await queryInterface.dropTable(USER_TABLE);
   },
 };
