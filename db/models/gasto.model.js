@@ -1,8 +1,8 @@
 const { Model, Sequelize } = require('sequelize');
 
-const RUTA_TABLE = 'rutas';
+const GASTO_TABLE = 'gastos';
 const USER_TABLE = 'users';
-const RutaSchema = {
+const GastoSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -21,10 +21,12 @@ const RutaSchema = {
   },
   descripcion: {
     type: Sequelize.DataTypes.STRING,
-    unique: true,
     allowNull: false,
   },
-
+  monto: {
+    type: Sequelize.DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+  },
   createdAt: {
     allowNull: false,
     type: Sequelize.DataTypes.DATE,
@@ -33,23 +35,21 @@ const RutaSchema = {
   },
 };
 
-class Ruta extends Model {
+class Gasto extends Model {
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: 'idUser' });
-    this.hasMany(models.Cliente, {
-      as: 'clientes',
-      foreignKey: 'idRuta',
+    this.belongsTo(models.User, {
+      foreignKey: 'idUser',
     });
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: RUTA_TABLE,
-      modelName: 'Ruta',
+      tableName: GASTO_TABLE,
+      modelName: 'Gasto',
       timestamps: false,
     };
   }
 }
 
-module.exports = { Ruta, RutaSchema, RUTA_TABLE };
+module.exports = { Gasto, GastoSchema, GASTO_TABLE };

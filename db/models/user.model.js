@@ -42,6 +42,14 @@ class User extends Model {
       as: 'rutas',
       foreignKey: 'idUser',
     });
+    this.hasMany(models.Gasto, {
+      as: 'gastos',
+      foreignKey: 'idUser',
+    });
+    this.hasMany(models.Cliente, {
+      as: 'clientes',
+      foreignKey: 'idUser',
+    });
   }
   /*Team.hasMany(Player, {
     foreignKey: 'clubId'

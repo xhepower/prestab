@@ -1,8 +1,11 @@
 'use strict';
 
 const { USER_TABLE } = require('./../models/user.model');
-const { CLIENTE_TABLE } = require('./../models/cliente.model');
+const { GASTO_TABLE } = require('./../models/gasto.model');
 const { RUTA_TABLE } = require('./../models/ruta.model');
+const { CLIENTE_TABLE } = require('./../models/cliente.model');
+const { PRESTAMO_TABLE } = require('./../models/prestamo.model');
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable(USER_TABLE, {
@@ -30,37 +33,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DataTypes.STRING,
         defaultValue: 'usuario',
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DataTypes.DATE,
-        field: 'created_at',
-        defaultValue: Sequelize.NOW,
-      },
-    });
-    await queryInterface.createTable(CLIENTE_TABLE, {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.DataTypes.INTEGER,
-      },
-      idUser: {
-        allowNull: false,
-        type: Sequelize.DataTypes.INTEGER,
-      },
-      nombre: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-      },
-      identidad: {
-        type: Sequelize.DataTypes.STRING,
-        unique: true,
-        allowNull: false,
-      },
-      direccion: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -97,13 +69,156 @@ module.exports = {
         defaultValue: Sequelize.NOW,
       },
     });
-
-    //hasta aqui
+    await queryInterface.createTable(GASTO_TABLE, {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.DataTypes.INTEGER,
+      },
+      idUser: {
+        allowNull: false,
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: USER_TABLE,
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      descripcion: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+      },
+      monto: {
+        type: Sequelize.DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        field: 'created_at',
+        defaultValue: Sequelize.NOW,
+      },
+    });
+    await queryInterface.createTable(CLIENTE_TABLE, {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.DataTypes.INTEGER,
+      },
+      idUser: {
+        allowNull: false,
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: USER_TABLE,
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      idRuta: {
+        allowNull: false,
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: RUTA_TABLE,
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      nombre: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+      },
+      identidad: {
+        type: Sequelize.DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+      },
+      direccion: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+      },
+      telefono: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: true,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        field: 'created_at',
+        defaultValue: Sequelize.NOW,
+      },
+    });
+    await queryInterface.createTable(PRESTAMO_TABLE, {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.DataTypes.INTEGER,
+      },
+      idUser: {
+        allowNull: false,
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: USER_TABLE,
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      idCliente: {
+        allowNull: false,
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: CLIENTE_TABLE,
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      monto: {
+        type: Sequelize.DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+      },
+      saldo: {
+        type: Sequelize.DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+      },
+      tasa: {
+        type: Sequelize.DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+      },
+      mora: {
+        type: Sequelize.DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+        defaultValue: 0,
+      },
+      pagado: {
+        type: Sequelize.DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      vencimiento: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        field: 'created_at',
+        defaultValue: Sequelize.NOW,
+      },
+    });
   },
 
   down: async (queryInterface) => {
+    await queryInterface.dropTable(PRESTAMO_TABLE);
     await queryInterface.dropTable(CLIENTE_TABLE);
     await queryInterface.dropTable(RUTA_TABLE);
+    await queryInterface.dropTable(GASTO_TABLE);
     await queryInterface.dropTable(USER_TABLE);
   },
 };

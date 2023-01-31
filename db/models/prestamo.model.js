@@ -1,9 +1,9 @@
 const { Model, Sequelize } = require('sequelize');
 
-const CLIENTE_TABLE = 'clientes';
+const PRESTAMO_TABLE = 'prestamos';
 const USER_TABLE = 'users';
-const RUTA_TABLE = 'rutas';
-const ClienteSchema = {
+const CLIENTE_TABLE = 'clientes';
+const PrestamoSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -20,32 +20,41 @@ const ClienteSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
   },
-  idRuta: {
+  idCliente: {
     allowNull: false,
     type: Sequelize.DataTypes.INTEGER,
     references: {
-      model: RUTA_TABLE,
+      model: CLIENTE_TABLE,
       key: 'id',
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
   },
-  nombre: {
-    type: Sequelize.DataTypes.STRING,
+  monto: {
+    type: Sequelize.DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  identidad: {
-    type: Sequelize.DataTypes.STRING,
-    unique: true,
+  saldo: {
+    type: Sequelize.DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  direccion: {
-    type: Sequelize.DataTypes.STRING,
+  tasa: {
+    type: Sequelize.DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  telefono: {
-    type: Sequelize.DataTypes.STRING,
-    allowNull: true,
+  pagado: {
+    type: Sequelize.DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  mora: {
+    type: Sequelize.DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+    defaultValue: 0,
+  },
+  vencimiento: {
+    allowNull: false,
+    type: Sequelize.DataTypes.DATE,
   },
   createdAt: {
     allowNull: false,
@@ -55,24 +64,20 @@ const ClienteSchema = {
   },
 };
 
-class Cliente extends Model {
+class Prestamo extends Model {
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'idUser' });
-    this.belongsTo(models.Ruta, { foreignKey: 'idRuta' });
-    this.hasMany(models.Prestamo, {
-      as: 'prestamos',
-      foreignKey: 'idCliente',
-    });
+    this.belongsTo(models.Cliente, { foreignKey: 'idCliente' });
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: CLIENTE_TABLE,
-      modelName: 'Cliente',
+      tableName: PRESTAMO_TABLE,
+      modelName: 'Prestamo',
       timestamps: false,
     };
   }
 }
 
-module.exports = { Cliente, ClienteSchema, CLIENTE_TABLE };
+module.exports = { Prestamo, PrestamoSchema, PRESTAMO_TABLE };
