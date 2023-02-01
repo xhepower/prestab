@@ -18,6 +18,7 @@ app.use(express.json());
 const whitelist = [
   'http://localhost:8080',
   'http://localhost:3005',
+  'http://137.184.94.94:3006',
   'https://myapp.co',
   'https://hidden-wave-53367.herokuapp.com',
 ];
@@ -30,7 +31,7 @@ const options = {
     }
   },
 };
-app.use(cors());
+app.use(cors(options));
 require('./utils/auth');
 app.get('/', (req, res) => {
   res.send('Hola mi server en express');
