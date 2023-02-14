@@ -5,7 +5,8 @@ const { GASTO_TABLE } = require('./../models/gasto.model');
 const { RUTA_TABLE } = require('./../models/ruta.model');
 const { CLIENTE_TABLE } = require('./../models/cliente.model');
 const { PRESTAMO_TABLE } = require('./../models/prestamo.model');
-
+const { PAGO_TABLE } = require('./../models/pago.model');
+const { MORA_TABLE } = require('./../models/mora.model');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable(USER_TABLE, {
@@ -205,6 +206,67 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
       },
+      emitido: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        field: 'created_at',
+        defaultValue: Sequelize.NOW,
+      },
+    });
+    await queryInterface.createTable(PAGO_TABLE, {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.DataTypes.INTEGER,
+      },
+      idUser: {
+        allowNull: false,
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: USER_TABLE,
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      idPrestamo: {
+        allowNull: false,
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: PRESTAMO_TABLE,
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      monto: {
+        type: Sequelize.DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+      },
+      emitido: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        field: 'created_at',
+        defaultValue: Sequelize.NOW,
+      },
+    });
+    await queryInterface.createTable(MORA_TABLE, {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.DataTypes.INTEGER,
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
@@ -215,6 +277,8 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
+    await queryInterface.dropTable(MORA_TABLE);
+    await queryInterface.dropTable(PAGO_TABLE);
     await queryInterface.dropTable(PRESTAMO_TABLE);
     await queryInterface.dropTable(CLIENTE_TABLE);
     await queryInterface.dropTable(RUTA_TABLE);

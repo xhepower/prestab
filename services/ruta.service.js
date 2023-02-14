@@ -1,6 +1,5 @@
 const boom = require('@hapi/boom');
 const { models } = require('./../libs/sequelize');
-
 class RutaService {
   constructor() {}
 
@@ -11,8 +10,7 @@ class RutaService {
   }
 
   async find() {
-    const rutas = await models.Ruta.findAll();
-    //delete rta.data.password;
+    const rutas = await models.Ruta.findAll({ include: models.User });
     return rutas;
   }
 

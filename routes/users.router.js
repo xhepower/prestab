@@ -15,7 +15,7 @@ const { checkRoles } = require('./../middlewares/auth.handler');
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('user'),
+  //checkRoles('user'),
   async (req, res, next) => {
     try {
       const users = await service.find();
@@ -45,7 +45,7 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('user'),
+  //checkRoles('user'),
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -61,7 +61,7 @@ router.post(
 router.patch(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles(),
+  //checkRoles(),
   validatorHandler(getUserSchema, 'params'),
   validatorHandler(updateUserSchema, 'body'),
   async (req, res, next) => {
@@ -79,7 +79,7 @@ router.patch(
 router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles(),
+  //checkRoles(),
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {

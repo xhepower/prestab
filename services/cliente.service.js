@@ -11,7 +11,9 @@ class ClienteService {
   }
 
   async find() {
-    const clientes = await models.Cliente.findAll();
+    const clientes = await models.Cliente.findAll({
+      include: [{ model: models.Ruta, include: models.User }],
+    });
     //delete rta.data.password;
     return clientes;
   }

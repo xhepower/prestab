@@ -11,7 +11,9 @@ class PrestamoService {
   }
 
   async find() {
-    const prestamos = await models.Prestamo.findAll();
+    const prestamos = await models.Prestamo.findAll({
+      include: [{ model: models.Cliente, include: models.Ruta }],
+    });
     //delete rta.data.password;
     return prestamos;
   }

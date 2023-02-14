@@ -10,12 +10,12 @@ const {
 
 const router = express.Router();
 const service = new ClienteService();
-const { checkRoles } = require('./../middlewares/auth.handler');
+//const { checkRoles } = require('./../middlewares/auth.handler');
 
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('user'),
+  //checkRoles('user'),
   async (req, res, next) => {
     try {
       const clientes = await service.find();
@@ -29,7 +29,7 @@ router.get(
 router.get(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('user'),
+  //checkRoles('user'),
   validatorHandler(getClienteSchema, 'params'),
   async (req, res, next) => {
     try {
@@ -45,7 +45,7 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('user'),
+  //checkRoles('user'),
   validatorHandler(createClienteSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -61,7 +61,7 @@ router.post(
 router.patch(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles(),
+  //checkRoles(),
   validatorHandler(getClienteSchema, 'params'),
   validatorHandler(updateClienteSchema, 'body'),
   async (req, res, next) => {
@@ -79,7 +79,7 @@ router.patch(
 router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles(),
+  //checkRoles(),
   validatorHandler(getClienteSchema, 'params'),
   async (req, res, next) => {
     try {

@@ -1,9 +1,9 @@
 const { Model, Sequelize } = require('sequelize');
 
-const PRESTAMO_TABLE = 'prestamos';
+const PAGO_TABLE = 'pagos';
 const USER_TABLE = 'users';
-const CLIENTE_TABLE = 'clientes';
-const PrestamoSchema = {
+const PRESTAMO_TABLE = 'clientes';
+const PagoSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -20,11 +20,11 @@ const PrestamoSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
   },
-  idCliente: {
+  idPrestamo: {
     allowNull: false,
     type: Sequelize.DataTypes.INTEGER,
     references: {
-      model: CLIENTE_TABLE,
+      model: PRESTAMO_TABLE,
       key: 'id',
     },
     onUpdate: 'CASCADE',
@@ -33,28 +33,6 @@ const PrestamoSchema = {
   monto: {
     type: Sequelize.DataTypes.DECIMAL(10, 2),
     allowNull: false,
-  },
-  saldo: {
-    type: Sequelize.DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-  },
-  tasa: {
-    type: Sequelize.DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-  },
-  pagado: {
-    type: Sequelize.DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
-  mora: {
-    type: Sequelize.DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-    defaultValue: 0,
-  },
-  vencimiento: {
-    allowNull: false,
-    type: Sequelize.DataTypes.DATE,
   },
   emitido: { allowNull: false, type: Sequelize.DataTypes.DATE },
   createdAt: {
@@ -65,20 +43,20 @@ const PrestamoSchema = {
   },
 };
 
-class Prestamo extends Model {
+class Pago extends Model {
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'idUser' });
-    this.belongsTo(models.Cliente, { foreignKey: 'idCliente' });
+    this.belongsTo(models.Prestamo, { foreignKey: 'idPrestamo' });
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: PRESTAMO_TABLE,
-      modelName: 'Prestamo',
+      tableName: PAGO_TABLE,
+      modelName: 'Pago',
       timestamps: false,
     };
   }
 }
 
-module.exports = { Prestamo, PrestamoSchema, PRESTAMO_TABLE };
+module.exports = { Pago, PagoSchema, PAGO_TABLE };

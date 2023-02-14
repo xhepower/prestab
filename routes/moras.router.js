@@ -1,25 +1,25 @@
 const express = require('express');
 const passport = require('passport');
-const GastoService = require('./../services/gasto.service');
+const MoraService = require('./../services/mora.service');
 const validatorHandler = require('./../middlewares/validator.handler');
 const {
-  updateGastoSchema,
-  createGastoSchema,
-  getGastoSchema,
-} = require('./../schemas/gasto.schema');
+  updateMoraSchema,
+  createMoraSchema,
+  getMoraSchema,
+} = require('./../schemas/mora.schema');
 
 const router = express.Router();
-const service = new GastoService();
+const service = new MoraService();
 //const { checkRoles } = require('./../middlewares/auth.handler');
 
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
-  //checkRoles('user'),
+  // checkRoles('user'),
   async (req, res, next) => {
     try {
-      const gastos = await service.find();
-      res.json(gastos);
+      const moras = await service.find();
+      res.json(moras);
     } catch (error) {
       next(error);
     }
@@ -29,8 +29,8 @@ router.get(
 router.get(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  // checkRoles('user'),
-  validatorHandler(getGastoSchema, 'params'),
+  //checkRoles('user'),
+  validatorHandler(getMoraSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -46,7 +46,7 @@ router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   //checkRoles('user'),
-  validatorHandler(createGastoSchema, 'body'),
+  validatorHandler(createMoraSchema, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;
@@ -62,8 +62,8 @@ router.patch(
   '/:id',
   passport.authenticate('jwt', { session: false }),
   //checkRoles(),
-  validatorHandler(getGastoSchema, 'params'),
-  validatorHandler(updateGastoSchema, 'body'),
+  validatorHandler(getMoraSchema, 'params'),
+  validatorHandler(updateMoraSchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -80,7 +80,7 @@ router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
   //checkRoles(),
-  validatorHandler(getGastoSchema, 'params'),
+  validatorHandler(getMoraSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
