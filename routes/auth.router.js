@@ -2,7 +2,11 @@ const express = require('express');
 const passport = require('passport');
 const validatorHandler = require('./../middlewares/validator.handler');
 const AuthService = require('./../services/auth.service');
-const { authSchema, recoverySchema } = require('./../schemas/auth.schema');
+const {
+  authSchema,
+  recoverySchema,
+  authRecoverySchema,
+} = require('./../schemas/auth.schema');
 const router = express.Router();
 const service = new AuthService();
 
@@ -23,7 +27,7 @@ router.post(
 
 router.post(
   '/recovery',
-  validatorHandler(authSchema, 'body'),
+  validatorHandler(authRecoverySchema, 'body'),
   async (req, res, next) => {
     try {
       const { email } = req.body;

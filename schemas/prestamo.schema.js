@@ -27,6 +27,7 @@ const updatePrestamoSchema = Joi.object({
   saldo: saldo,
   tasa: tasa,
   vencimiento: vencimiento,
+  emitido: emitido,
   mora: mora,
   pagado: pagado,
 });

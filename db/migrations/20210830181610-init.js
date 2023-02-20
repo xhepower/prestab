@@ -6,7 +6,6 @@ const { RUTA_TABLE } = require('./../models/ruta.model');
 const { CLIENTE_TABLE } = require('./../models/cliente.model');
 const { PRESTAMO_TABLE } = require('./../models/prestamo.model');
 const { PAGO_TABLE } = require('./../models/pago.model');
-const { MORA_TABLE } = require('./../models/mora.model');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable(USER_TABLE, {
@@ -259,25 +258,9 @@ module.exports = {
         defaultValue: Sequelize.NOW,
       },
     });
-    await queryInterface.createTable(MORA_TABLE, {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.DataTypes.INTEGER,
-      },
-
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DataTypes.DATE,
-        field: 'created_at',
-        defaultValue: Sequelize.NOW,
-      },
-    });
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable(MORA_TABLE);
     await queryInterface.dropTable(PAGO_TABLE);
     await queryInterface.dropTable(PRESTAMO_TABLE);
     await queryInterface.dropTable(CLIENTE_TABLE);

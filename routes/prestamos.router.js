@@ -43,6 +43,20 @@ router.get(
 );
 
 router.post(
+  '/actualizar-moras',
+  // passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      // const body = req.body;
+      // const newCategory = await service.create(body);
+      // res.status(201).json(newCategory);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   //checkRoles('user'),
