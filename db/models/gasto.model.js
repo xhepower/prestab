@@ -23,13 +23,17 @@ const GastoSchema = {
     type: Sequelize.DataTypes.STRING,
     allowNull: false,
   },
+  emitido: {
+    allowNull: false,
+    type: Sequelize.DataTypes.DATEONLY,
+  },
   monto: {
     type: Sequelize.DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
   createdAt: {
     allowNull: false,
-    type: Sequelize.DataTypes.DATE,
+    type: Sequelize.DataTypes.DATEONLY,
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },

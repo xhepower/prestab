@@ -36,7 +36,7 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.DATEONLY,
         field: 'created_at',
         defaultValue: Sequelize.NOW,
       },
@@ -64,7 +64,7 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.DATEONLY,
         field: 'created_at',
         defaultValue: Sequelize.NOW,
       },
@@ -86,6 +86,10 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
+      emitido: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATEONLY,
+      },
       descripcion: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
@@ -96,7 +100,7 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.DATEONLY,
         field: 'created_at',
         defaultValue: Sequelize.NOW,
       },
@@ -147,7 +151,7 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.DATEONLY,
         field: 'created_at',
         defaultValue: Sequelize.NOW,
       },
@@ -203,15 +207,15 @@ module.exports = {
       },
       vencimiento: {
         allowNull: false,
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.DATEONLY,
       },
       emitido: {
         allowNull: false,
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.DATEONLY,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.DATEONLY,
         field: 'created_at',
         defaultValue: Sequelize.NOW,
       },
@@ -249,11 +253,11 @@ module.exports = {
       },
       emitido: {
         allowNull: false,
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.DATEONLY,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.DATEONLY,
         field: 'created_at',
         defaultValue: Sequelize.NOW,
       },

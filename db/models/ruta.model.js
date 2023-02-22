@@ -27,7 +27,7 @@ const RutaSchema = {
 
   createdAt: {
     allowNull: false,
-    type: Sequelize.DataTypes.DATE,
+    type: Sequelize.DataTypes.DATEONLY,
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },

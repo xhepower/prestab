@@ -30,7 +30,7 @@ const UserSchema = {
   },
   createdAt: {
     allowNull: false,
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },

@@ -34,10 +34,10 @@ const PagoSchema = {
     type: Sequelize.DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  emitido: { allowNull: false, type: Sequelize.DataTypes.DATE },
+  emitido: { allowNull: false, type: Sequelize.DataTypes.DATEONLY },
   createdAt: {
     allowNull: false,
-    type: Sequelize.DataTypes.DATE,
+    type: Sequelize.DataTypes.DATEONLY,
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },

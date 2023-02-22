@@ -54,12 +54,12 @@ const PrestamoSchema = {
   },
   vencimiento: {
     allowNull: false,
-    type: Sequelize.DataTypes.DATE,
+    type: Sequelize.DataTypes.DATEONLY,
   },
-  emitido: { allowNull: false, type: Sequelize.DataTypes.DATE },
+  emitido: { allowNull: false, type: Sequelize.DataTypes.DATEONLY },
   createdAt: {
     allowNull: false,
-    type: Sequelize.DataTypes.DATE,
+    type: Sequelize.DataTypes.DATEONLY,
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
