@@ -48,8 +48,8 @@ router.post(
   async (req, res, next) => {
     try {
       // const body = req.body;
-      // const newCategory = await service.create(body);
-      // res.status(201).json(newCategory);
+      const newCategory = await service.moras();
+      res.status(201).json(newCategory);
     } catch (error) {
       next(error);
     }

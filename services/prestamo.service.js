@@ -1,6 +1,8 @@
 const boom = require('@hapi/boom');
 const { models } = require('./../libs/sequelize');
-
+const { Op } = require('sequelize');
+const moment = require('moment');
+require('dotenv').config();
 class PrestamoService {
   constructor() {}
 
@@ -17,7 +19,21 @@ class PrestamoService {
     //delete rta.data.password;
     return prestamos;
   }
-
+  async moras() {
+    const prestamos = await models.Prestamo.findAll({
+      where: { pagado: false, mora: 0, vencimiento: { [Op.lte]: moment() } },
+      include: [{ model: models.Cliente, include: models.Ruta }],
+    });
+    prestamos.forEach(async (prestamo) => {
+      const saldo = parseFloat(prestamo.saldo);
+      const mora = saldo * parseFloat(process.env.INTERES_MORA);
+      await this.update(parseInt(prestamo.id), {
+        saldo: saldo + mora,
+        mora: mora,
+      });
+    });
+    return prestamos;
+  }
   async findOne(id) {
     const prestamo = await models.Prestamo.findByPk(id);
     if (!prestamo) {
