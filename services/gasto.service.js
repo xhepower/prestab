@@ -11,7 +11,12 @@ class GastoService {
   }
 
   async find() {
-    const gastos = await models.Gasto.findAll();
+    const gastos = await models.Gasto.findAll({
+      include: models.User,
+    });
+    gastos.forEach((gasto) => {
+      delete gasto.dataValues.User.password;
+    });
     //delete rta.data.password;
     return gastos;
   }
