@@ -36,8 +36,8 @@ const ClienteSchema = {
   },
   identidad: {
     type: Sequelize.DataTypes.STRING,
-    unique: true,
-    allowNull: false,
+    unique: false,
+    allowNull: true,
   },
   direccion: {
     type: Sequelize.DataTypes.STRING,
